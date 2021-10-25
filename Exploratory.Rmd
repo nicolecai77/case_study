@@ -94,11 +94,17 @@ nyc_airbnb %>%
 
 
 ## retry leaflet
+ addProviderTiles-- provide some background information
 ```{r,eval=FALSE}
 library(leaflet)
+
+pal = colorNumeric("viridis", NULL)
+
 nyc_airbnb %>% 
+  filter(price<500) %>% 
+  sample_n(1000) %>% 
   leaflet() %>% 
-  addTiles() %>% 
-  addMarkers( ~lat, ~ long)
+  addProviderTiles(providers$CartoDB.Positron) %>% 
+  addCircleMarkers( ~lat, ~ long,radius = 1, color = ~pal(price))
 ```
 
